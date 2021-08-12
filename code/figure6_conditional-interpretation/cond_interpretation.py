@@ -15,7 +15,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 reg_lin = linear_model.LinearRegression()
-savepath = '~/university/phd/2021/research/paper_2021_pitfalls_lnai/code/'
+# savepath = '~/university/phd/2021/research/paper_2021_pitfalls_lnai/code/'
 
 # datasets to use
 n_train, n_test = 10 ** 6 * 4, 10 ** 3
@@ -87,5 +87,5 @@ df_pfi = ex_pfi.fi_means_quantiles()
 df_pfi['type'] = 'pfi'
 
 df_res = pd.concat([df_pfi, df_cfi, df_sage]).reset_index()
-df_res.to_csv(savepath+'df_res.csv')
+df_res.to_csv('df_res.csv')
 
