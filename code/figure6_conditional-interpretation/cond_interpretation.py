@@ -79,7 +79,7 @@ plt.show()
 df_cfi = ex_cfi.fi_means_quantiles()
 df_cfi['type'] = 'cfi'
 
-ex_pfi = wrk.dis_from_baselinefunc(fsoi, X_test, y_test, baseline='empty', marginalize=False)
+ex_pfi = wrk.dis_from_baselinefunc(fsoi, X_test, y_test, baseline='remainder', marginalize=False)
 ex_pfi.hbarplot()
 plt.show()
 
