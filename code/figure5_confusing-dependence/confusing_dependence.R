@@ -1,10 +1,10 @@
 library("dHSIC")
 #library("ggplot2")
 # Simulate data with dinosaur package
-source("code/theme.R")
+source("../theme.R")
 
 
-datasets = read.csv("data/DatasaurusDozen.tsv", sep = "\t")
+datasets = read.csv("../../data/DatasaurusDozen.tsv", sep = "\t")
 print(unique(datasets$dataset))
 dat = datasets[datasets$dataset == "slant_down",]
 
@@ -26,7 +26,7 @@ p = ggplot(dat) + geom_point(aes(x = x, y = y)) +
   scale_x_continuous("Feature"~X[1]) +
   scale_y_continuous("Feature"~X[2])
 
-pdf(file = "./figures/association.pdf", height = 3, width = 6)
+pdf(file = "association.pdf", height = 3, width = 6)
 print(p)
 dev.off()
 # Maybe alsoshow that PDP and PFI would extrapolate
