@@ -3,9 +3,12 @@ library("patchwork")
 library("iml")
 library("data.table")
 source("code/theme.R")
-
 set.seed(9)
 
+
+# =============================================================================
+# Generate data
+# =============================================================================
 n = 100
 p = 10
 ylimits = c(-1, 1)
@@ -17,11 +20,15 @@ X = draw_x(n)
 y = draw_y(X)
 X$y = y
 
+# =============================================================================
+# Train and interpret model repeatedly
+# =============================================================================
 rf = randomForest(y ~ ., data = X)
 
 pred = Predictor$new(rf, y = "y")
 res1 = FeatureEffect$new(pred, feature = "X1", method = "pdp")$results
 
+# Repeat Monte Carlo sampling
 repeated = lapply(1:10, function(i){
   X2 = draw_x(n)
   pred = Predictor$new(rf, data = X2)
@@ -31,6 +38,7 @@ repeated = lapply(1:10, function(i){
 })
 res2 = rbindlist(repeated)
 
+# Repeat model training
 repeated = lapply(1:10, function(i){
   X2 = draw_x(n)
   y2 = draw_y(X2)
@@ -40,6 +48,10 @@ repeated = lapply(1:10, function(i){
   res$repetition = i
   res
 })
+
+# =============================================================================
+# Combine results
+# =============================================================================
 res3 = rbindlist(repeated)
 
 types = c("PDP estimate",
@@ -53,6 +65,10 @@ res3$type = types[3]
 
 results= rbindlist(list(res1, res2, res3), fill = TRUE)
 results$type = factor(results$type, levels = types)
+
+# =============================================================================
+# Plot
+# =============================================================================
 p = ggplot(results) +
   geom_line(aes(x = X1, y = .value, group = repetition)) +
   facet_grid(. ~ type) +
