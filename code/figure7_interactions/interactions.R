@@ -47,22 +47,16 @@ p_dice = ggplot(dice_curves$dice_curves, aes(x = x2, y = .value, group = .id)) +
   geom_line(alpha = 0.2) +
   geom_line(data = dice_curves$dpdp, size = 1.5, color = "gold") + 
   xlab("Feature"~X[2]) + 
-  ylab("deriv of predicted y")
+  ylab("Deriv of predicted y")
 
 # standard deviation of dice curves
 p_sd = ggplot(dice_curves$sd_deriv, aes(x = gridpts, y = .sd)) + 
   geom_line(size = 1.5) + 
   xlab("Feature"~X[2]) + 
-  ylab("sd(deriv)")
+  ylab("Sd(deriv)")
 
 # arrange p_dice and p_sd in one plot
 p3 = egg::ggarrange(p_dice, p_sd, heights = c(0.75, 0.25))
-grid.arrange(
-  grobs = gl,
-  widths = c(2, 1, 1),
-  layout_matrix = rbind(c(1, 2, NA),
-                        c(3, 3, 4))
-)
 
 
 # create 2D PDP between x2 and x3
@@ -73,11 +67,11 @@ p4 = effect_2dpdp$plot(rug=FALSE) + xlab("Feature"~X[2]) + ylab("Feature"~X[3])
 # arrange all plots in one figure
 figure <- ggpubr::ggarrange(p1, p2, p3, p4,
   labels = c("A", "B", "C", "D"),
-  ncol = 4)
+  ncol = 2, nrow = 2)
 
 
 # save figure
-pdf(file = "./figures/interaction.pdf", height = 3.5, width = 15)
+pdf(file = "./interaction.pdf", height = 8.6, width = 13)
 figure
 dev.off()
 
