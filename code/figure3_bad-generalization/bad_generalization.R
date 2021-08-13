@@ -145,4 +145,4 @@ p = ggplot(effs, aes(x = .borders, y = .value, group = model, color = model)) +
 # =============================================================================
 p = p_mse / p  + plot_layout(heights = c(1, 4))
 
-ggsave(p, file = "../paper_lnai/figures/bad-generalization.pdf", width = 10, height = 5)
+ggsave(p, file = "bad-generalization.pdf", width = 10, height = 5)
